@@ -1,0 +1,24 @@
+<!--   Header Start   -->
+<header class="container hello-header">
+  Geeksalon Twitterlike App
+</header>
+<!--   Header End   -->
+
+<!--   Button contaner Start   -->
+<div class="container">
+  <div class="row hello-btn-container">
+  <div class="col-sm-12">
+    <!-- 『<% %>』で囲むとビューファイルにrubyのコード書ける！ -->
+    <!-- 『button_toっていうメソッドがrailsに定義されてるからそれを使ってる！』 -->
+    <%= button_to "ログイン", { :controller => "tweets", :action => "index"}, :method => :get, :class => "btn btn-success btn-lg btn-block" %>
+  </div>
+  </div>
+  <div class="row hello-btn-container">
+    <% if user_signed_in? == false %><!-- ユーザーがログイン状態でない時だけ"新規登録"ボタンを表示 -->
+      <div class="col-sm-12">
+        <%= button_to "新規登録", { :controller => "users/registrations", :action => "new"}, :method => :get, :class => "btn btn-warning btn-lg btn-block" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<!--   Button container End   -->

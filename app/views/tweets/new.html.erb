@@ -1,0 +1,12 @@
+<%= form_for(@tweet, url:{controller:'tweets', action:'create'}) do |f| %>
+<!-- この間内に書かれている内容が表示されるってことかな？ -->
+  <div class="field">
+    <%= f.label :body %><!-- 『<% %>』で囲むことでこのタグの間にrubyのコードを書けるようになる！ -->
+    <br><!-- 改行入れる -->
+    <%= f.text_field :body, size: 140 %>
+    <!-- 要はrubyのコードを書いてその内容をhtmlに表示させてるってことやな！ -->
+  </div>
+  <div class="action">
+    <%= f.submit %>
+  </div>
+  <% end %>

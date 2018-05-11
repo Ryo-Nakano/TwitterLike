@@ -1,0 +1,62 @@
+<!-- ビューファイル！(見た目を司ってる！) -->
+
+<!-- まさかのミス！ "="をつけ忘れていた！！ -->
+<!-- Rubyの処理をただ呼ぶだけの時 → <% %>で囲う -->
+<!-- 値を取ってきて表示 → <%= %>で囲う 【値入れるんだから"="要るでしょ！みたいなノリで覚えとこ】-->
+
+<!--   Header Start   -->
+<header class="container tweets-header">
+  <div class="row">
+    <!-- このへんのsmとか数字とかは後でBootstrap使い方とか調べれば十分に対応できそうだな -->
+    <div class="col-sm-4">
+      <%= button_to "MyPage", { :controller => "tweets", :action => "mypage"}, :method => :get, :class => "btn btn-warning btn-md" %>
+    </div>
+    <div class="col-sm-4 tweets-header-title">
+      Geeksalon Twitterlike App
+    </div>
+    <div class="col-sm-2">
+      <%= button_to "投稿する", { :controller => "tweets", :action => "new"}, :method => :get, :class => "btn btn-success btn-md" %>
+    </div>
+    <div class="col-sm-2">
+      <%= button_to "ログアウト", { :controller => "devise/sessions", :action => "destroy"}, :method => :delete, :class => "btn btn-danger btn-md" %>
+    </div>
+  </div>
+</header>
+<!--   Header End   -->
+
+<!--   Timeline Start   -->
+<section class="container timeline-container">
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="col-sm-12 mypage-container">
+        <div class="profile">
+          <%= image_tag(current_user.icon_url, :size => "80×80", :class => "profile-icon")  unless current_user.icon_url.blank? %>
+          <p class="profile-name">
+            <b><%= current_user.name %></b>
+            <br>
+            <%= current_user.email %>
+          </p>
+        </div>
+        <%= button_to "MyPage", { :controller => "tweets", :action => "mypage"}, :method => :get, :class => "btn btn-warning btn-md btn-block" %>
+      </div>
+    </div>
+    <!-- 各1つ1つのセクションの表示内容 -->
+    <div class="col-sm-6 timeline">
+      <% @tweets.each do |t| %><!-- 変数tは@tweets内の1つ1つの要素を示している！ -->
+        <div class="tweet-container">
+          <%= image_tag(t.user.icon_url, :size => "40x40", :class => "icon") unless current_user.icon_url.blank? %>
+          <p class="tweet-text-container">
+            <%= t.body %>
+            <br>
+            <%= t.created_at %>
+            <br>
+            <%= t.user.email %>
+          </p>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-sm-3">
+    </div>
+  </div>
+</section>
+<!--   Timeline End   -->

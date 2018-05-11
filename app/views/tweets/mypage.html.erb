@@ -1,0 +1,59 @@
+<!-- ビューファイル！(見た目を司ってる！) -->
+
+<!-- まさかのミス！ "="をつけ忘れていた！！ -->
+<!-- Rubyの処理をただ呼ぶだけの時 → <% %>で囲う -->
+<!-- 値を取ってきて表示 → <%= %>で囲う 【値入れるんだから"="要るでしょ！みたいなノリで覚えとこ】-->
+
+<!--   Header Start   -->
+<header class="container tweets-header">
+  <div class="row">
+    <!-- このへんのsmとか数字とかは後でBootstrap使い方とか調べれば十分に対応できそうだな -->
+    <div class="col-sm-2">
+      <%= button_to "AllTweets", { :controller => "tweets", :action => "index"}, :method => :get, :class => "btn btn-warning btn-md" %>
+    </div>
+    <div class="col-sm-2">
+      <!-- 仮にnewに飛ぶようにしているだけで本来はプロフィール編集画面に飛ぶようにする！ -->
+      <%= button_to "EditProfile", { :controller => "users/registrations", :action => "edit"}, :method => :get, :class => "btn btn-primary btn-md" %>
+      <!-- もう確実にこれが↑いけない。消したら動く。 -->
+      <!-- ここでの呼び出しは問題無いと仮定 → そもそもルーティングがうまくいってなくてアクションに飛ばせていない？ -->
+      <!-- だとしたらなんで飛ばせて無い？ -->
+    </div>
+    <div class="col-sm-4 tweets-header-title">
+      Geeksalon Twitterlike App
+    </div>
+    <div class="col-sm-2">
+      <%= button_to "投稿する", { :controller => "tweets", :action => "new"}, :method => :get, :class => "btn btn-success btn-md" %>
+    </div>
+    <div class="col-sm-2">
+      <%= button_to "ログアウト", { :controller => "devise/sessions", :action => "destroy"}, :method => :delete, :class => "btn btn-danger btn-md" %>
+    </div>
+  </div>
+</header>
+<!--   Header End   -->
+
+<!--   Timeline Start   -->
+<section class="container timeline-container">
+  <div class="row">
+    <div class="col-sm-3">
+      <!-- これ幅調整の為に意味なく入れられてるdivみたい！ -->
+    </div>
+    <!-- 各1つ1つのセクションの表示内容 -->
+    <div class="col-sm-6 timeline">
+      <% @tweets.each do |t| %><!-- 変数tは@tweets内の1つ1つの要素を示している！ -->
+        <div class="tweet-container">
+          <%= t.body %><!-- 本文を表示 -->
+          <br>
+          <%= t.created_at %><!-- いつ呟かれたのか表示 -->
+          <!-- <br> -->
+          <!-- <%= t.user.email %> -->
+          <!-- tweetsとuserのアソシエーション設定をしているからt.userでUserの中の情報を取って来れる！ -->
+        </div>
+      <% end %>
+    </div>
+    <div class="col-sm-3"><!-- これあっても無くても挙動全く変わらなかったんだけどなんで存在すんの？ -->
+    </div>
+  </div>
+</section>
+<!--   Timeline End   -->
+
+<!-- 書いているコードの内容は同じだけど、こっちではcurrent_userのtweetだけを取って来て変数@tweetsに入れてるから表示される内容は異なる！ -->
